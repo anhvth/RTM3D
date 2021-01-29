@@ -2,6 +2,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+
+from tqdm import tqdm
 import pickle
 import json
 import numpy as np
@@ -107,7 +109,6 @@ for SPLIT in SPLITS:
                 line = line[:-1]
             image_id = int(line)
             calib_path = calib_dir  + '{}.txt'.format(line)
-
             calib0 = read_clib0(calib_path)
             if image_id>7480 and image_id<14962:
                 calib = read_clib3(calib_path)
@@ -170,5 +171,6 @@ for SPLIT in SPLITS:
         print("# annotations: ", len(ret['annotations']))
         # import pdb; pdb.set_trace()
         out_path = '{}annotations/kitti_{}.json'.format(DATA_PATH, split)
+        os.makedirs(os.path.dirname(out_path), exist_ok=True)
         json.dump(ret, open(out_path, 'w'))
 
