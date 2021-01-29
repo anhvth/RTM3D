@@ -48,12 +48,13 @@ def unproject_2d_to_3d(pt_2d, depth, P):
   pt_3d = np.array([x, y, z], dtype=np.float32)
   return pt_3d
 if __name__ == '__main__':
-    img2_path='/home/lipeixuan/3ddetectionkitti/data_object_image_2/training/image_2/'
-    img3_path = '/home/lipeixuan/3ddetectionkitti/data_object_image_3/training/image_3/'
-    calib_path = '/home/lipeixuan/3ddetectionkitti/data_object_calib/training/calib/'
-    label_path='/home/lipeixuan/3ddetectionkitti/label/training/label_2/'
-    outp='/home/lipeixuan/3ddetectionkitti/kitti_format/'
-    test_path='/home/lipeixuan/3ddetectionkitti/data_object_image_2/testing/image_2/'
+    img2_path='/root/RTM3D/src/tools/kitti/training/image_2/'
+    img3_path = None#'/home/lipeixuan/3ddetectionkitti/data_object_image_3/training/image_3/'
+    calib_path = '/root/RTM3D/src/tools/kitti/training/calib/'
+    label_path='/root/RTM3D/src/tools/kitti/training/label_2/'
+
+    outp='/root/RTM3D/kitti_format/'
+    test_path='/root/RTM3D/src/tools/kitti/testing/image_2'
     image_target_path = outp + 'data/kitti/image/'
     if not os.path.exists(image_target_path):
         os.makedirs(image_target_path)
@@ -74,11 +75,12 @@ if __name__ == '__main__':
     for idx in images:
         img_name=os.path.join(img2_path,idx)
         shutil.copyfile(img_name,image_target_path+idx)
-    images = os.listdir(img3_path)
-    for idx in images:
-        img_name = os.path.join(img3_path, idx)
-        idx_tar="{:06d}".format( int(float(idx[:6])+7481) )+'.png'
-        shutil.copyfile(img_name, image_target_path + idx_tar)
+    if img3_path is not None:
+        images = os.listdir(img3_path)
+        for idx in images:
+            img_name = os.path.join(img3_path, idx)
+            idx_tar="{:06d}".format( int(float(idx[:6])+7481) )+'.png'
+            shutil.copyfile(img_name, image_target_path + idx_tar)
     calibes = os.listdir(calib_path)
     for idx in calibes:
         img_name = os.path.join(calib_path, idx)

@@ -123,3 +123,5 @@ work_dirs/
 *.py~
 *k.sh~
 cache
+# demo_kitti_format/data/kitti/
+kitti_format/data/kitti
